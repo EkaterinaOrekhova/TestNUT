@@ -1,0 +1,169 @@
+<% include ./partials/messages %>
+
+<div class="card bg-light mb-3">
+    <div class="card-header" style="font-weight:bold">Тестовый сценарий</div>
+        <div class="card-body">
+            <form action="add" method="POST">
+                <input id="testcaseID" name="testcaseID" type="hidden" value="<%= typeof testcaseID != 'undefined' ? testcaseID : 0 %>">
+                <div class="form-group">
+                <label for="name">Название</label>
+                <input type="name" id="name" name="name" class="form-control" placeholder="Введите название.." 
+                value="<%= typeof name != 'undefined' ? name : '' %>"/>
+                </div>
+                <div class="form-group">
+                <label for="author">Автор</label>
+                <input type="author" id="author" name="author" class="form-control" placeholder="Введите автора.." 
+                value="<%= typeof author != 'undefined' ? author : '' %>"/>
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание</label>
+                    <textarea class="form-control" type="description" id="description" name="description" rows="3"
+                    ><%= typeof description != 'undefined' ? description : '' %></textarea>
+                </div>
+                <div class="form-group row">
+                        <label for="createdAt" class="col-sm-2 col-form-label">Дата создания</label>
+                        <div class="col-sm-10">
+                          <input type="createdAt" readonly="" class="form-control-plaintext" id="createdAt" value="">
+                        </div>
+                </div>
+                <div class="form-group row">
+                        <label for="updatedAt" class="col-sm-2 col-form-label">Дата изменения</label>
+                        <div class="col-sm-10">
+                          <input type="updatedAt" readonly="" class="form-control-plaintext" id="updatedAt" value="">
+                        </div>
+                </div>
+                <hr class="my-4">
+                <h3>Шаги тестового сценария</h3>
+                <table class="table table-hover">
+                    <thead>
+                      <tr class="table-success">
+                        <th scope="col">Номер шага</th>
+                        <th scope="col">Действие</th>
+                        <th scope="col">Ожидаемая реакция</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <% casesteps.forEach(function (step) { %>
+                      <tr class="table-default">
+                        <td><%= step.stepnumber %></td>
+                        <td><%= step.description %></td>
+                        <td><%= step.result %></td>
+                        <td style="width:10vh">
+                            <button type="button" data-toggle="modal" data-target="#editFormModal" 
+                            class="fas fa-edit btn btn-primary btn-block btn-success edit-casestep"
+                            data-id="<%= step.stepnumber %>"
+                            data-description="<%= step.description %>" data-result="<%= step.result %>"></button>
+                            <button type="button" data-idtest="<%= testcase.id %>" data-id ="<%= step.id %>" 
+                                class="fas fa-trash btn btn-block btn-danger delete-casestep"></button>
+                        </td>
+                      </tr>
+                    <% }); %>
+                    </tbody>
+            </table> 
+            <hr class="my-4">
+            <div class="row" style="margin: 0; padding: 0">
+                    <div style="padding-right: 1vh">
+                        <button type="submit" value="" class="btn btn-primary btn-block">Сохранить</button>
+                    </div>
+                    <div style="padding-right: 1vh">
+                        <a href="/startpage/testcases" class="btn btn-primary btn-block">Назад</a>
+                    </div>
+                    <div>
+                        <button type="button" data-toggle="modal" data-target="#formModal" 
+                        class="btn btn-primary btn-block">Добавить шаг</button>
+                    </div>               
+            </div>                   
+            </form>           
+        </div>       
+        <p></p>
+        <div>          
+    </div>
+</div>
+
+<!-- Add form modal -->
+<div class="modal" id="formModal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" action="addcasestep<%= typeof testcaseID != 'undefined' ? testcaseID : 0 %>">
+                    <div class="modal-header">
+                            <h5 class="modal-title">Шаг тестового сценария</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label style="font-weight:bold">Действие</label>
+                            <textarea class="form-control" name="description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight:bold">Ожидаемая реакция</label>
+                            <textarea class="form-control" name="result" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <input type="submit" class="btn btn-primary" value="Сохранить"/>
+                    </div>
+            </form>                
+        </div>
+    </div>
+</div>
+
+<!-- Edit form modal -->
+<div class="modal" id="editFormModal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" action="stepcaseedit<%= typeof testcaseID != 'undefined' ? testcaseID : 0 %>">
+                    <div class="modal-header">
+                            <h5 class="modal-title">Шаг тестового сценария</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label style="font-weight:bold">Действие</label>
+                            <textarea id="descrption-at-modal-window" class="form-control" name="description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight:bold">Ожидаемая реакция</label>
+                            <textarea id="result-at-modal-window" class="form-control" name="result" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <input type="submit" class="btn btn-primary" value="Сохранить"/>
+                    </div>
+                    <input type="hidden" id="stepid-at-modal-window" name="stepid_at_modal_window" value=""/>
+            </form>                
+        </div>
+    </div>
+</div>
+
+<script>
+$(".delete-casestep").click(function(){
+    var id = $(this).data('id');
+    var idtest = $(this).data('idtest');
+    var url = '/startpage/testcases/casestep/delete'+ id;
+        $.ajax({
+        url: url,
+        type: 'DELETE',
+        success: function(result){
+            console.log('Удаление шага..');
+            window.location.reload();
+        },
+        error: function(err){
+            console.log(err);
+        }
+    });
+});
+
+$(".edit-casestep").click(function(){
+$('#descrption-at-modal-window').val($(this).data('description'));
+$('#result-at-modal-window').val($(this).data('result'));
+$('#stepid-at-modal-window').val($(this).data('id'));         
+});
+
+</script>

@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>Bootstrap Tree View</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css">
+    <link href="/node_modules/patternfly-bootstrap-treeview/public/css/bootstrap-treeview.css" rel="stylesheet">
+  </head>
+  <body>
+  	<div class="container">
+      <h1>Bootstrap Tree View - DOM Tree</h1>
+      <br/>
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="treeview"></label>
+          <div id="treeview"/>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
+  	<script src="/node_modules/patternfly-bootstrap-treeview/public/js/bootstrap-treeview.js"></script>
+    <script>
+        $(document).ready(function() {
+            if(confirm('dsgfdsfsd')){
+                console.log('Удаление шага..');
+                var tree = [
+                {
+                    text: "Parent 1",
+                    nodes: [
+                    {
+                        text: "Child 1",
+                        nodes: [
+                        {
+                            text: "Grandchild 1"
+                        },
+                        {
+                            text: "Grandchild 2"
+                        }
+                        ]
+                    },
+                    {
+                        text: "Child 2"
+                    }
+                    ]
+                },
+                {
+                    text: "Parent 2"
+                },
+                {
+                    text: "Parent 3"
+                },
+                {
+                    text: "Parent 4"
+                },
+                {
+                    text: "Parent 5"
+                }
+                ];
+                function getTree() {
+                // Some logic to retrieve, or generate tree structure
+                return tree;
+                }
+                
+                $('#tree').treeview({data: getTree()});
+                window.location.reload();
+            };
+        });
+    </script>
+  </body>

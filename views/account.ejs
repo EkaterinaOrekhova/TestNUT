@@ -1,0 +1,88 @@
+<h2 style="margin-top:6vh">Личный кабинет</h2>
+<% include ./partials/messages %>
+<div class="row">
+        <div style="width:50vw; margin-right: 5vw;">
+                <div class="card bg-light mb-3">
+                        <div class="card-header" style="font-weight:bold">Персональные данные</div>
+                        <div class="card-body">
+                                
+                                <form action="/startpage/changeinf" method="POST">
+                                    <div class="form-group">
+                                      <label for="login">Логин</label>
+                                      <input
+                                        type="login"
+                                        id="login"
+                                        name="login"
+                                        class="form-control"
+                                        placeholder="Введите логин.."
+                                        value="<%= typeof login != 'undefined' ? login : '' %>"
+                                      />
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="email">Электронная почта</label>
+                                      <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="form-control"
+                                        placeholder="Введите эл. адрес.."
+                                        value="<%= typeof email != 'undefined' ? email : '' %>"
+                                      />
+                                    </div>
+                                    <button style="width: 10vw" type="submit" class="btn btn-primary btn-block">
+                                      Сохранить
+                                    </button>
+                                  </form>
+                        </div>
+                </div>
+        </div>
+
+        <div style="width:27vw;">
+                <div class="card bg-light mb-3">
+                        <div class="card-header" style="font-weight:bold">Изменение пароля</div>
+                        <div class="card-body">
+                                
+                                <form action="/startpage/changepassword" method="POST">
+                                    <div class="form-group">
+                                            <label for="password">Старый пароль</label>
+                                            <input
+                                              type="password"
+                                              id="password"
+                                              name="password"
+                                              class="form-control"
+                                              placeholder="Введите старый пароль.."
+                                              value="<%= typeof password != 'undefined' ? password : '' %>"
+                                            />
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="password2">Новый пароль</label>
+                                            <input
+                                              type="password"
+                                              id="password2"
+                                              name="password2"
+                                              class="form-control"
+                                              placeholder="Введите новый пароль.."
+                                              value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+                                            />
+                                          </div>
+                                          <div class="form-group">
+                                                <label for="password3">Подтверждение нового пароля</label>
+                                                <input
+                                                  type="password"
+                                                  id="password3"
+                                                  name="password3"
+                                                  class="form-control"
+                                                  placeholder="Введите новый пароль еще раз.."
+                                                  value="<%= typeof password3 != 'undefined' ? password3 : '' %>"
+                                                />
+                                              </div>
+                                    <button style="width: 10vw" type="submit" class="btn btn-primary btn-block">
+                                      Сохранить
+                                    </button>
+                                  </form>
+                        </div>
+                </div>
+        </div>
+
+        
+</div>

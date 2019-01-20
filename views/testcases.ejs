@@ -1,0 +1,96 @@
+
+<div class="row">
+        <div style="width:50vw;" class="col-lg-9">
+            <div class="row" style="margin: 0; padding: 0">
+                    <div style="width:57vw; ">
+                        <h1>Тестовые сценарии</h1>
+                    </div>
+                    <div>
+                        <a href="/startpage/testcases/add" style="margin-top: 2vh"
+                        class="btn btn-primary fas fa-plus"></a>
+                    </div>                
+            </div>
+
+            <% testcases.forEach(function (testcase) { %>
+                    <div class=" mybigclasstestcase card bg-light mb-3">
+                        <div class="card-body">
+                            <h4 class="card-title"><%= testcase.name %></h4>
+                            <h6 class="card-subtitle mb-2 text-muted"> Автор: <%= testcase.author %></h6>
+                            <h6 class="card-subtitle mb-2 text-muted"> Дата создания: <%= testcase.createdAt %></h6>
+                            <p class="card-text"><%= testcase.description %></p>
+                            <a href="/startpage/testcases/edit<%=testcase.id%>" style="width: 3vw;" data-id = "<%= testcase.id %>" class="card-link btn btn-primary fas fa-edit"></a>
+                            <button style="width: 3vw;" class="btn btn-danger delete-testcase fas fa-trash" data-id = "<%= testcase.id %>" ></button>
+                        </div>
+                        <p></p>
+                    </div>             
+            <% }); %>
+        </div>
+    
+        <div style="width:30vw;" class="col-lg-3">
+                <div class="card bg-light mb-3" style="max-width: 20rem;">
+                        <div class="card-body">
+                            <h5>Перед началом работы выберите проект и раздел проекта</h5>
+                            <hr class="my-4">
+                                <div class="form-group">
+                                        <select class="form-control" id="exampleSelect1">
+                                            <option disabled selected>Выберите проект..</option>
+                                            <% projects.forEach(function (project) { %>
+                                                <option value="<%= project.id %>"><%= project.name %></option>
+                                            <% }); %>
+                                        </select>
+                                </div>
+                                <p></p>
+                                <div class="form-group">
+                                        <select name class="form-control" id="exampleSelect2">
+                                            <option disabled selected>Выберите раздел..</option>
+                                                <option>Горячая линия</option>
+                                                <option>Карточка клиента</option>
+                                                <option>Рассылка писем</option>
+                                        </select>
+                                    </div> 
+                               <!--
+                            <a href="/startpage/testcases/sort2" class="btn btn-primary " data-id = 5 >Применить</a> --> 
+                                
+                        </div>
+                      </div>    
+        </div>
+    </div>
+    <script>
+        $(".delete-testcase").click(function(){
+        var id = $(this).data('id');
+        var url = '/startpage/testcases/delete'+ id;
+        if(confirm('Вы действительно хотите удалить сценарий?')){
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: function(result){
+                    console.log('Удаление сценария..');
+                    window.location.href='/startpage/testcases';
+                },
+                error: function(err){
+                    console.log(err);
+                    }
+                });
+            };
+        });
+
+        $(".sort-testcase").click(function(){
+
+            var e = document.getElementById("exampleSelect1");
+            var strProject = e.options[e.selectedIndex].value;
+            var url = '/startpage/testcases/sort'+ strProject;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    success: function(result){
+                        console.log('Сотировка..');
+                        $(".mybigclasstestcase").show();
+                    },
+                    error: function(err){
+                        console.log(err);
+                        }
+                    });
+            });
+
+    </script>
+    
